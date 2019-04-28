@@ -15,17 +15,8 @@ namespace Bedroom.Minesweeper
         private const string INFO_STRING = "INFO";
         private const string LOG_FILE = "log.txt";
         private const string WARNING_STRING = "WARNING";
-        private static IFormatProvider dateTimeCulture;
-        private static string logFilePath;
-        private static Dictionary<LogSeverity, ConsoleColor> severityColor;
-        private static Dictionary<LogSeverity, string> severityPrefix;
-        private static StringBuilder stringBuilder;
 
-        #endregion Private Fields
-
-        #region Public Constructors
-
-        static Debug()
+        internal static void Setup()
         {
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             severityPrefix = new Dictionary<LogSeverity, string>()
@@ -50,19 +41,30 @@ namespace Bedroom.Minesweeper
             // We use the German culture for datetime, because it spits out hh:mm:ss (like any sane being)
             dateTimeCulture = CultureInfo.CreateSpecificCulture("de-DE");
 
+            // Enable all of the settings by default
             UseLogFile = true;
+            ShowTimeStamp = true;
+            UseColors = true;
 
             logFilePath = Path.Combine(AppData.DataFolder, LOG_FILE);
             if (File.Exists(logFilePath))
                 File.Delete(logFilePath);
             File.Create(logFilePath).Dispose(); // We immediatly dispose the returned stream, to free the lock on the file
 
+            CommandLineArguments.Load();
+
             // We call it here, because now we can't have a cyclic reference anymore (all other variables are set-up)
             if (CommandLineArguments.NoLog)
                 UseLogFile = false;
         }
 
-        #endregion Public Constructors
+        private static IFormatProvider dateTimeCulture;
+        private static string logFilePath;
+        private static Dictionary<LogSeverity, ConsoleColor> severityColor;
+        private static Dictionary<LogSeverity, string> severityPrefix;
+        private static StringBuilder stringBuilder;
+
+        #endregion Private Fields
 
         #region Public Enums
 
@@ -96,6 +98,11 @@ namespace Bedroom.Minesweeper
         /// If true, the logger will fill the log file
         /// </summary>
         public static bool UseLogFile { get; set; }
+
+        /// <summary>
+        /// If true, the different severities will be shown in different colors
+        /// </summary>
+        public static bool UseColors { get; set; }
 
         #endregion Public Properties
 
@@ -162,6 +169,9 @@ namespace Bedroom.Minesweeper
             stringBuilder.AppendLine(text); // Append the logtext itself
 
 #if DEBUG
+            // Will not work in visual studio, the debug output is redirected to the vs out, which does not support colors
+            if (UseColors)
+                Console.ForegroundColor = severityColor[severity];
             Console.Write(stringBuilder.ToString()); // Write to stdout
 #endif
 

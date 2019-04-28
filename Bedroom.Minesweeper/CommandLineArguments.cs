@@ -10,6 +10,7 @@ namespace Bedroom.Minesweeper
     public static class CommandLineArguments
     {
         private static Dictionary<string, ArgumentData> argumentReflection;
+        private static bool loaded;
 
         /// <summary>
         /// Do not use the log file
@@ -31,8 +32,15 @@ namespace Bedroom.Minesweeper
         [Argument("-width", typeof(int))]
         public static int WindowWidth { get; set; } = 600;
 
-        static CommandLineArguments()
+        /// <summary>
+        /// Loads the command line arguments (if they aren't already loaded).
+        /// </summary>
+        public static void Load()
         {
+            if (loaded)
+                return;
+            loaded = true;
+
             LoadArguments();
             string[] args = Environment.GetCommandLineArgs();
             for (int i = 0; i < args.Length; i++)
@@ -51,6 +59,13 @@ namespace Bedroom.Minesweeper
             }
         }
 
+        /// <summary>
+        /// Sets a variable to a value given as "parameter". If the argument has no parameter,
+        /// the "parameter"-parameter will be ignored and thus is assigned null by default.
+        /// Note that when no parameter is given to a variable, bool is assumed and set to true.
+        /// </summary>
+        /// <param name="argument">The argument data that comes from the reflection</param>
+        /// <param name="parameter">The value that is assigned</param>
         private static void ApplyArgument(ArgumentData argument, string parameter = null)
         {
             if (!argument.HasParameter)
@@ -67,6 +82,9 @@ namespace Bedroom.Minesweeper
             argument.Property.SetValue(null, result);
         }
 
+        /// <summary>
+        /// Creates the argumentReflection dictionary and fills it with arguments via reflection.
+        /// </summary>
         private static void LoadArguments()
         {
             argumentReflection = new Dictionary<string, ArgumentData>();
@@ -85,9 +103,16 @@ namespace Bedroom.Minesweeper
             }
         }
 
+        /// <summary>
+        /// An attribute for properties that allows them to be assigned by the user
+        /// </summary>
         [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
         private class ArgumentAttribute : Attribute
         {
+            /// <summary>
+            /// Gives the property a single argument without a parameter
+            /// </summary>
+            /// <param name="argument">The argument that needs to be passed in</param>
             public ArgumentAttribute(string argument)
             {
                 Argument = argument;
@@ -95,6 +120,12 @@ namespace Bedroom.Minesweeper
                 ParameterType = null;
             }
 
+            /// <summary>
+            /// Gives the property a single argument with a parameter of a given type
+            /// </summary>
+            /// <param name="argument">The argument that needs to be passed in</param>
+            /// <param name="parameterType">The type that should be casted to. Note: This should be a numerical struct (like int or float) or a string.
+            /// Everything else may not be parsable</param>
             public ArgumentAttribute(string argument, Type parameterType)
             {
                 Argument = argument;
@@ -107,6 +138,9 @@ namespace Bedroom.Minesweeper
             public Type ParameterType;
         }
 
+        /// <summary>
+        /// Transport class to get data from the analysis via reflection to the actual evaluation and assignment
+        /// </summary>
         private class ArgumentData
         {
             public PropertyInfo Property;
@@ -114,6 +148,11 @@ namespace Bedroom.Minesweeper
             public bool HasParameter;
             public Type ParameterType;
 
+            /// <summary>
+            /// Constructor that makes assignment easier (so you do not have to pass everything in.
+            /// </summary>
+            /// <param name="attribute">The attribute of the property</param>
+            /// <param name="property">The property itself</param>
             public ArgumentData(ArgumentAttribute attribute, PropertyInfo property)
             {
                 Property = property;
@@ -124,3 +163,5 @@ namespace Bedroom.Minesweeper
         }
     }
 }
+
+// Yes, I am aware that some comments may be... sarcastic.

@@ -22,7 +22,7 @@ namespace Bedroom.Minesweeper
         /// </summary>
         public static string DataFolder { get; private set; }
 
-        static AppData()
+        public static void Load()
         {
             ApplicationFolder = Assembly.GetEntryAssembly().Location;
             DataFolder = Path.Combine(Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName, "LocalLow", APPDATA_FOLDER);

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Bedroom.Minesweeper
 {
-#if WINDOWS || LINUX
+#if WINDOWS
     /// <summary>
     /// The main class.
     /// </summary>
@@ -19,15 +19,23 @@ namespace Bedroom.Minesweeper
             // When compiling with DEBUG set, open the console
             AllocConsole();
 #endif
-            Debug.Log("Game started");
+
             using (var game = new Core())
                 game.Run();
         }
 
 #if DEBUG
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool AllocConsole();
+        /// <summary>
+        /// Opens the windows console and allows writing to it.
+        /// It will not receive any input in visual studio, as stdout is redirected to the output window.
+        /// </summary>
+        /// <returns>Returns 0 when opening failed.</returns>
+        [DllImport("kernel32.dll",
+            EntryPoint = "AllocConsole",
+            SetLastError = true,
+            CharSet = CharSet.Auto,
+            CallingConvention = CallingConvention.StdCall)]
+        private static extern int AllocConsole();
 #endif
     }
 #endif
