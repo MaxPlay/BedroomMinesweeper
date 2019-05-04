@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Bedroom.Minesweeper.Assets;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,14 +11,15 @@ namespace Bedroom.Minesweeper
     /// </summary>
     public class Core : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public static GraphicsDeviceManager Graphics { get; private set; }
+
+        public static SpriteBatch SpriteBatch { get; private set; }
 
         public Core()
         {
-            graphics = new GraphicsDeviceManager(this);
+            Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
+            new AssetManager(Content);
         }
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace Bedroom.Minesweeper
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
 
 
         }
