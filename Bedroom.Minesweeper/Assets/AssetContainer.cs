@@ -24,6 +24,8 @@ namespace Bedroom.Minesweeper.Assets
         public AssetContainer(ContentManager contentManager)
         {
             this.contentManager = contentManager;
+            assets = new Dictionary<int, T>();
+            assetLookup = new Dictionary<string, int>();
         }
 
         /// <summary>
