@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Assets\AssetContainer.cs" />
     <Compile Include="Assets\IAssetImporter.cs" />
+    <Compile Include="ECS\Components\Component.cs" />
+    <Compile Include="ECS\Entity.cs" />
     <Compile Include="Exceptions\AssetLoadException.cs" />
     <Compile Include="Assets\AssetManager.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
@@ -76,7 +78,6 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ECS\" />
     <Folder Include="Math\" />
     <Folder Include="Rendering\" />
   </ItemGroup>
