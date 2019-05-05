@@ -53,6 +53,11 @@
     <Compile Include="Core.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="AppData.cs" />
+    <Compile Include="Levels\Level.cs" />
+    <Compile Include="Levels\LevelManager.cs" />
+    <Compile Include="Exceptions\LevelNotFoundException.cs" />
+    <Compile Include="Exceptions\LevelRegisterException.cs" />
+    <Compile Include="Levels\SceneGraph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -71,7 +76,9 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ECS\" />
     <Folder Include="Math\" />
+    <Folder Include="Rendering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

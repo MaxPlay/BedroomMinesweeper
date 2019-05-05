@@ -53,7 +53,8 @@ namespace Bedroom.Minesweeper
 
             CommandLineArguments.Load();
 
-            // We call it here, because now we can't have a cyclic reference anymore (all other variables are set-up)
+            // We call it here, because now we can't have a cyclic reference anymore (all other
+            // variables are set-up)
             if (CommandLineArguments.NoLog)
                 UseLogFile = false;
         }
@@ -169,7 +170,8 @@ namespace Bedroom.Minesweeper
             stringBuilder.AppendLine(text); // Append the logtext itself
 
 #if DEBUG
-            // Will not work in visual studio, the debug output is redirected to the vs out, which does not support colors
+            // Will not work in visual studio, the debug output is redirected to the vs out, which
+            // does not support colors
             if (UseColors)
                 Console.ForegroundColor = severityColor[severity];
             Console.Write(stringBuilder.ToString()); // Write to stdout

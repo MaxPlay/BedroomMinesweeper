@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 namespace Bedroom.Minesweeper
 {
 #if WINDOWS
+
     /// <summary>
     /// The main class.
     /// </summary>
@@ -13,7 +14,7 @@ namespace Bedroom.Minesweeper
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
 #if DEBUG
             // When compiling with DEBUG set, open the console
@@ -25,9 +26,10 @@ namespace Bedroom.Minesweeper
         }
 
 #if DEBUG
+
         /// <summary>
-        /// Opens the windows console and allows writing to it.
-        /// It will not receive any input in visual studio, as stdout is redirected to the output window.
+        /// Opens the windows console and allows writing to it. It will not receive any input in
+        /// visual studio, as stdout is redirected to the output window.
         /// </summary>
         /// <returns>Returns 0 when opening failed.</returns>
         [DllImport("kernel32.dll",
@@ -36,7 +38,9 @@ namespace Bedroom.Minesweeper
             CharSet = CharSet.Auto,
             CallingConvention = CallingConvention.StdCall)]
         private static extern int AllocConsole();
+
 #endif
     }
+
 #endif
 }

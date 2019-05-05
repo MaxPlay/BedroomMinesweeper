@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bedroom.Minesweeper
 {
     public static class CommandLineArguments
     {
+        #region Private Fields
+
         private static Dictionary<string, ArgumentData> argumentReflection;
         private static bool loaded;
+
+        #endregion Private Fields
+
+        #region Public Properties
 
         /// <summary>
         /// Do not use the log file
@@ -31,6 +34,10 @@ namespace Bedroom.Minesweeper
         [Argument("-windowwidth", typeof(int))]
         [Argument("-width", typeof(int))]
         public static int WindowWidth { get; set; } = 600;
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Loads the command line arguments (if they aren't already loaded).
@@ -59,10 +66,14 @@ namespace Bedroom.Minesweeper
             }
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         /// <summary>
-        /// Sets a variable to a value given as "parameter". If the argument has no parameter,
-        /// the "parameter"-parameter will be ignored and thus is assigned null by default.
-        /// Note that when no parameter is given to a variable, bool is assumed and set to true.
+        /// Sets a variable to a value given as "parameter". If the argument has no parameter, the
+        /// "parameter"-parameter will be ignored and thus is assigned null by default. Note that
+        /// when no parameter is given to a variable, bool is assumed and set to true.
         /// </summary>
         /// <param name="argument">The argument data that comes from the reflection</param>
         /// <param name="parameter">The value that is assigned</param>
@@ -103,12 +114,28 @@ namespace Bedroom.Minesweeper
             }
         }
 
+        #endregion Private Methods
+
+        #region Private Classes
+
         /// <summary>
         /// An attribute for properties that allows them to be assigned by the user
         /// </summary>
         [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
         private class ArgumentAttribute : Attribute
         {
+            #region Public Fields
+
+            public string Argument;
+
+            public bool HasParameter;
+
+            public Type ParameterType;
+
+            #endregion Public Fields
+
+            #region Public Constructors
+
             /// <summary>
             /// Gives the property a single argument without a parameter
             /// </summary>
@@ -124,8 +151,10 @@ namespace Bedroom.Minesweeper
             /// Gives the property a single argument with a parameter of a given type
             /// </summary>
             /// <param name="argument">The argument that needs to be passed in</param>
-            /// <param name="parameterType">The type that should be casted to. Note: This should be a numerical struct (like int or float) or a string.
-            /// Everything else may not be parsable</param>
+            /// <param name="parameterType">
+            /// The type that should be casted to. Note: This should be a numerical struct (like int
+            /// or float) or a string. Everything else may not be parsable
+            /// </param>
             public ArgumentAttribute(string argument, Type parameterType)
             {
                 Argument = argument;
@@ -133,9 +162,7 @@ namespace Bedroom.Minesweeper
                 ParameterType = parameterType;
             }
 
-            public string Argument;
-            public bool HasParameter;
-            public Type ParameterType;
+            #endregion Public Constructors
         }
 
         /// <summary>
@@ -143,10 +170,16 @@ namespace Bedroom.Minesweeper
         /// </summary>
         private class ArgumentData
         {
-            public PropertyInfo Property;
+            #region Public Fields
+
             public string Argument;
             public bool HasParameter;
             public Type ParameterType;
+            public PropertyInfo Property;
+
+            #endregion Public Fields
+
+            #region Public Constructors
 
             /// <summary>
             /// Constructor that makes assignment easier (so you do not have to pass everything in.
@@ -160,7 +193,11 @@ namespace Bedroom.Minesweeper
                 HasParameter = attribute.HasParameter;
                 ParameterType = attribute.ParameterType;
             }
+
+            #endregion Public Constructors
         }
+
+        #endregion Private Classes
     }
 }
 

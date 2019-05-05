@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bedroom.Minesweeper
 {
     public static class AppData
     {
+        #region Private Fields
+
         private const string APPDATA_FOLDER = "Bedroom Minesweeper";
+
+        #endregion Private Fields
+
+        #region Public Properties
 
         /// <summary>
         /// The location of the executable
@@ -22,6 +24,10 @@ namespace Bedroom.Minesweeper
         /// </summary>
         public static string DataFolder { get; private set; }
 
+        #endregion Public Properties
+
+        #region Public Methods
+
         public static void Load()
         {
             ApplicationFolder = Assembly.GetEntryAssembly().Location;
@@ -29,5 +35,7 @@ namespace Bedroom.Minesweeper
             if (!Directory.Exists(DataFolder))
                 Directory.CreateDirectory(DataFolder);
         }
+
+        #endregion Public Methods
     }
 }
