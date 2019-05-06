@@ -55,6 +55,7 @@
     <Compile Include="Core.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="AppData.cs" />
+    <Compile Include="Levels\ISceneGraphNode.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelManager.cs" />
     <Compile Include="Exceptions\LevelNotFoundException.cs" />
