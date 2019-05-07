@@ -57,6 +57,8 @@ namespace Bedroom.Minesweeper
             // I know it is already loaded the Args in Debug.Setup(), but when it comes to the point
             // where we change things, we do not want the software to break
             CommandLineArguments.Load();
+            Input.Init();
+            Input.RegisterClick(Keys.Escape, Exit);
             base.Initialize();
         }
 
@@ -84,9 +86,7 @@ namespace Bedroom.Minesweeper
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
+            Input.Update();
             LevelManager.Instance.Update(gameTime);
 
             base.Update(gameTime);

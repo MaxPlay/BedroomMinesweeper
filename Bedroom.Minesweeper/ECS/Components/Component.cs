@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bedroom.Minesweeper.ECS.Components
+﻿namespace Bedroom.Minesweeper.ECS.Components
 {
     public abstract class Component
     {
+        #region Private Fields
+
         private Entity entity;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Component(Entity entity)
         {
             this.entity = entity;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
 
         public Entity Entity
         {
@@ -35,5 +39,7 @@ namespace Bedroom.Minesweeper.ECS.Components
                 entity.AddComponent(this);
             }
         }
+
+        #endregion Public Properties
     }
 }

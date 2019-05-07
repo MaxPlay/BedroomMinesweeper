@@ -13,7 +13,9 @@ namespace Bedroom.Minesweeper.ECS
 
         private List<ISceneGraphNode> children;
         private List<Component> components;
+        private List<IDrawableComponent> drawableComponents;
         private ISceneGraphNode parent;
+        private List<IUpdatableComponent> updatableComponents;
 
         #endregion Private Fields
 
@@ -25,6 +27,8 @@ namespace Bedroom.Minesweeper.ECS
             Name = name ?? throw new ArgumentNullException(nameof(name));
             components = new List<Component>();
             children = new List<ISceneGraphNode>();
+            drawableComponents = new List<IDrawableComponent>();
+            updatableComponents = new List<IUpdatableComponent>();
         }
 
         public Entity(string name, Vector2 position, float rotation, Vector2 scale, SceneGraph root) : this(name, root)
@@ -122,20 +126,13 @@ namespace Bedroom.Minesweeper.ECS
             node.Parent = this;
         }
 
-        public void RemoveChild(ISceneGraphNode node)
-        {
-            children.Remove(node);
-            node.Parent = null;
-        }
-
-        public IEnumerable<ISceneGraphNode> EnumerateChildren()
-        {
-            return children;
-        }
-
         public void AddComponent(Component component)
         {
             components.Add(component);
+            if (component is IDrawableComponent)
+                drawableComponents.Add(component as IDrawableComponent);
+            if (component is IUpdatableComponent)
+                updatableComponents.Add(component as IUpdatableComponent);
         }
 
         public T AddComponent<T>() where T : Component
@@ -145,10 +142,11 @@ namespace Bedroom.Minesweeper.ECS
             return component;
         }
 
-        public T GetComponent<T>() where T : Component
-        {
-            return components.FirstOrDefault() as T;
-        }
+        public void Draw(GameTime deltaTime) => drawableComponents.ForEach(c => c.Draw(deltaTime));
+
+        public IEnumerable<ISceneGraphNode> EnumerateChildren() => children;
+
+        public T GetComponent<T>() where T : Component => components.FirstOrDefault() as T;
 
         public IEnumerable<T> GetComponents<T>() where T : Component
         {
@@ -161,10 +159,22 @@ namespace Bedroom.Minesweeper.ECS
             return result;
         }
 
+        public void RemoveChild(ISceneGraphNode node)
+        {
+            children.Remove(node);
+            node.Parent = null;
+        }
+
         public bool RemoveComponent(Component component)
         {
+            if (component is IDrawableComponent)
+                drawableComponents.Remove(component as IDrawableComponent);
+            if (component is IUpdatableComponent)
+                updatableComponents.Remove(component as IUpdatableComponent);
             return components.Remove(component);
         }
+
+        public void Update(GameTime deltaTime) => updatableComponents.ForEach(c => c.Update(deltaTime));
 
         #endregion Public Methods
     }

@@ -48,6 +48,8 @@
     <Compile Include="Assets\IAssetImporter.cs" />
     <Compile Include="ECS\Components\Component.cs" />
     <Compile Include="ECS\Entity.cs" />
+    <Compile Include="ECS\IDrawableComponent.cs" />
+    <Compile Include="ECS\IUpdatableComponent.cs" />
     <Compile Include="Exceptions\AssetLoadException.cs" />
     <Compile Include="Assets\AssetManager.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="Core.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="AppData.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="Levels\ISceneGraphNode.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelManager.cs" />

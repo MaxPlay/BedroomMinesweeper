@@ -1,36 +1,38 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bedroom.Minesweeper.Levels
 {
     public interface ISceneGraphNode
     {
+        #region Public Properties
+
+        IReadOnlyList<ISceneGraphNode> Children { get; }
+        Vector2 LocalPosition { get; set; }
+        float LocalRotation { get; set; }
+        Vector2 LocalScale { get; set; }
+        ISceneGraphNode Parent { get; set; }
         Vector2 Position { get; set; }
 
+        ISceneGraphNode Root { get; }
         float Rotation { get; set; }
 
         Vector2 Scale { get; }
 
-        Vector2 LocalPosition { get; set; }
+        #endregion Public Properties
 
-        float LocalRotation { get; set; }
-
-        Vector2 LocalScale { get; set; }
-
-        ISceneGraphNode Parent { get; set; }
-
-        IReadOnlyList<ISceneGraphNode> Children { get; }
-
-        ISceneGraphNode Root { get; }
+        #region Public Methods
 
         void AddChild(ISceneGraphNode node);
 
-        void RemoveChild(ISceneGraphNode node);
+        void Draw(GameTime deltaTime);
 
         IEnumerable<ISceneGraphNode> EnumerateChildren();
+
+        void RemoveChild(ISceneGraphNode node);
+
+        void Update(GameTime deltaTime);
+
+        #endregion Public Methods
     }
 }

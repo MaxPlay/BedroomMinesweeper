@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 
 namespace Bedroom.Minesweeper.Levels
 {
     public abstract class Level
     {
-
         #region Public Constructors
 
         // A man needs a name.
@@ -19,6 +17,7 @@ namespace Bedroom.Minesweeper.Levels
 
         #region Public Properties
 
+        public bool Initialized { get; private set; }
         public string Name { get; private set; }
 
         #endregion Public Properties
@@ -27,11 +26,11 @@ namespace Bedroom.Minesweeper.Levels
 
         protected SceneGraph SceneGraph { get; private set; }
 
-        public bool Initialized { get; private set; }
-
         #endregion Protected Properties
 
         #region Public Methods
+
+        public abstract void DeInit();
 
         public void DoDraw(GameTime gameTime)
         {
@@ -49,15 +48,9 @@ namespace Bedroom.Minesweeper.Levels
             SceneGraph.Update(gameTime);
         }
 
-        #endregion Public Methods
-
-        #region Internal Methods
-
-        public abstract void DeInit();
-
         public abstract void Init();
 
-        #endregion Internal Methods
+        #endregion Public Methods
 
         #region Protected Methods
 
