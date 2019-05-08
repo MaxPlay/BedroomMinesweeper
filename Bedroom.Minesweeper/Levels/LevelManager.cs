@@ -14,7 +14,7 @@ namespace Bedroom.Minesweeper.Levels
         private bool disposedValue = false;
         private Dictionary<string, short> levelLookup;
         private Dictionary<short, Level> levels;
-        private List<Level> loadedLevels;
+        private Level loadedLevel;
 
         #endregion Private Fields
 
@@ -28,7 +28,6 @@ namespace Bedroom.Minesweeper.Levels
 
             levels = new Dictionary<short, Level>();
             levelLookup = new Dictionary<string, short>();
-            loadedLevels = new List<Level>();
         }
 
         #endregion Public Constructors
@@ -48,7 +47,7 @@ namespace Bedroom.Minesweeper.Levels
 
         public void Draw(GameTime gameTime)
         {
-            loadedLevels.ForEach(l => l.DoDraw(gameTime));
+            loadedLevel?.DoDraw(gameTime);
         }
 
         public Level GetLevel(string name)
@@ -75,27 +74,11 @@ namespace Bedroom.Minesweeper.Levels
 
         public void Load(short id)
         {
-            loadedLevels.ForEach(l => l.DeInit());
-            Level level = GetLevel(id);
+            loadedLevel?.DeInit();
+            loadedLevel = GetLevel(id);
             // Init will be called in first update
-            loadedLevels.Add(level);
         }
-
-        public void LoadAdditive(string name)
-        {
-            if (!levelLookup.ContainsKey(name))
-                throw new LevelNotFoundException(name);
-
-            LoadAdditive(levelLookup[name]);
-        }
-
-        public void LoadAdditive(short id)
-        {
-            Level level = GetLevel(id);
-            // Init will be called in first update
-            loadedLevels.Add(level);
-        }
-
+        
         public void Register(Level level)
         {
             short id = Validate(level);
@@ -106,7 +89,7 @@ namespace Bedroom.Minesweeper.Levels
 
         public void Update(GameTime gameTime)
         {
-            loadedLevels.ForEach(l => l.DoUpdate(gameTime));
+            loadedLevel?.DoUpdate(gameTime);
         }
 
         #endregion Public Methods
@@ -121,12 +104,10 @@ namespace Bedroom.Minesweeper.Levels
 
                 if (disposing)
                 {
-                    loadedLevels.ForEach(l => l.DeInit());
+                    loadedLevel?.DeInit();
                 }
 
                 levels.Clear();
-                loadedLevels.Clear();
-
                 Debug.Log("Level Manager Disposed.");
 
                 disposedValue = true;

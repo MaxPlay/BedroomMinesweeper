@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Bedroom.Minesweeper.ECS;
+using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Bedroom.Minesweeper.Levels
 {
@@ -11,6 +13,7 @@ namespace Bedroom.Minesweeper.Levels
         {
             Name = name;
             LevelManager.Instance.Register(this);
+            entities = new List<Entity>();
         }
 
         #endregion Public Constructors
@@ -24,7 +27,7 @@ namespace Bedroom.Minesweeper.Levels
 
         #region Protected Properties
 
-        protected SceneGraph SceneGraph { get; private set; }
+        List<Entity> entities;
 
         #endregion Protected Properties
 
@@ -34,7 +37,7 @@ namespace Bedroom.Minesweeper.Levels
 
         public void DoDraw(GameTime gameTime)
         {
-            SceneGraph.Draw(gameTime);
+            entities.ForEach(c => c.Draw(gameTime));
         }
 
         public void DoUpdate(GameTime gameTime)
@@ -45,7 +48,7 @@ namespace Bedroom.Minesweeper.Levels
                 Initialized = true;
             }
 
-            SceneGraph.Update(gameTime);
+            entities.ForEach(c => c.Update(gameTime));
         }
 
         public abstract void Init();

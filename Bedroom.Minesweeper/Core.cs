@@ -69,6 +69,9 @@ namespace Bedroom.Minesweeper
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            // This is a dummy/fallback graphic that may be used to draw debug stuff or anything, really
+            AssetManager.Pixel = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            AssetManager.Pixel.SetData(new Color[] { Color.White });
         }
 
         /// <summary>

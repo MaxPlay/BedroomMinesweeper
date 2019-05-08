@@ -7,47 +7,45 @@ using System.Linq;
 
 namespace Bedroom.Minesweeper.ECS
 {
-    public class Entity : ISceneGraphNode
+    public class Entity
     {
         #region Private Fields
 
-        private List<ISceneGraphNode> children;
+        private List<Entity> children;
         private List<Component> components;
         private List<IDrawableComponent> drawableComponents;
-        private ISceneGraphNode parent;
         private List<IUpdatableComponent> updatableComponents;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public Entity(string name, SceneGraph root)
+        public Entity(string name)
         {
-            Root = root ?? throw new ArgumentNullException(nameof(root));
             Name = name ?? throw new ArgumentNullException(nameof(name));
             components = new List<Component>();
-            children = new List<ISceneGraphNode>();
+            children = new List<Entity>();
             drawableComponents = new List<IDrawableComponent>();
             updatableComponents = new List<IUpdatableComponent>();
         }
 
-        public Entity(string name, Vector2 position, float rotation, Vector2 scale, SceneGraph root) : this(name, root)
+        public Entity(string name, Vector2 position, float rotation, Vector2 scale) : this(name)
         {
             LocalPosition = position;
             LocalRotation = rotation;
             LocalScale = scale;
         }
 
-        public Entity(SceneGraph root) : this("new Entity", root)
+        public Entity() : this("new Entity")
         {
         }
 
-        public Entity(string name, ISceneGraphNode parent, SceneGraph root) : this(name, root)
+        public Entity(string name, Entity parent) : this(name)
         {
             Parent = parent ?? throw new ArgumentNullException(nameof(parent));
         }
 
-        public Entity(string name, Vector2 position, float rotation, Vector2 scale, ISceneGraphNode parent, SceneGraph root) : this(name, parent, root)
+        public Entity(string name, Vector2 position, float rotation, Vector2 scale, Entity parent) : this(name, parent)
         {
             LocalPosition = position;
             LocalRotation = rotation;
@@ -58,20 +56,13 @@ namespace Bedroom.Minesweeper.ECS
 
         #region Public Properties
 
-        public IReadOnlyList<ISceneGraphNode> Children { get { return children; } }
+        public IReadOnlyList<Entity> Children { get { return children; } }
         public Vector2 LocalPosition { get; set; }
         public float LocalRotation { get; set; }
         public Vector2 LocalScale { get; set; }
         public string Name { get; set; }
 
-        public ISceneGraphNode Parent
-        {
-            get { return parent; }
-            set
-            {
-                parent = (value == Root) ? null : value;
-            }
-        }
+        public Entity Parent { get; set; }
 
         public Vector2 Position
         {
@@ -88,8 +79,6 @@ namespace Bedroom.Minesweeper.ECS
                     LocalPosition = value - Parent.Position;
             }
         }
-
-        public ISceneGraphNode Root { get; private set; }
 
         public float Rotation
         {
@@ -113,9 +102,9 @@ namespace Bedroom.Minesweeper.ECS
 
         #region Public Methods
 
-        public void AddChild(ISceneGraphNode node)
+        public void AddChild(Entity node)
         {
-            if (node == Root)
+            if (node == Parent)
                 return;
 
             if (!children.Contains(node))
@@ -144,7 +133,7 @@ namespace Bedroom.Minesweeper.ECS
 
         public void Draw(GameTime deltaTime) => drawableComponents.ForEach(c => c.Draw(deltaTime));
 
-        public IEnumerable<ISceneGraphNode> EnumerateChildren() => children;
+        public IEnumerable<Entity> EnumerateChildren() => children;
 
         public T GetComponent<T>() where T : Component => components.FirstOrDefault() as T;
 
@@ -159,7 +148,7 @@ namespace Bedroom.Minesweeper.ECS
             return result;
         }
 
-        public void RemoveChild(ISceneGraphNode node)
+        public void RemoveChild(Entity node)
         {
             children.Remove(node);
             node.Parent = null;

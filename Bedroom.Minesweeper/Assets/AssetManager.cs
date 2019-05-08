@@ -28,6 +28,8 @@ namespace Bedroom.Minesweeper.Assets
 
         #region Public Properties
 
+        public static Texture2D Pixel { get; set; }
+
         public static AssetManager Instance { get; private set; }
 
         public AssetContainer<SoundEffect> SoundEffects { get; private set; }

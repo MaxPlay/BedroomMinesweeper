@@ -58,12 +58,10 @@
     <Compile Include="Debug.cs" />
     <Compile Include="AppData.cs" />
     <Compile Include="Input.cs" />
-    <Compile Include="Levels\ISceneGraphNode.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelManager.cs" />
     <Compile Include="Exceptions\LevelNotFoundException.cs" />
     <Compile Include="Exceptions\LevelRegisterException.cs" />
-    <Compile Include="Levels\SceneGraph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
