@@ -1,5 +1,6 @@
 ﻿using Bedroom.Minesweeper.Assets;
 using Bedroom.Minesweeper.Levels;
+using Bedroom.Minesweeper.Loading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +19,7 @@ namespace Bedroom.Minesweeper
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            new GameLoading();
             new AssetManager(Content);
             new LevelManager();
         }
@@ -59,6 +61,7 @@ namespace Bedroom.Minesweeper
             CommandLineArguments.Load();
             Input.Init();
             Input.RegisterClick(Keys.Escape, Exit);
+            GameLoading.Instance.Load(LoadingPreferences.Create());
             base.Initialize();
         }
 

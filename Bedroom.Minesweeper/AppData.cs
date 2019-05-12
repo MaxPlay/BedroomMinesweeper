@@ -30,7 +30,7 @@ namespace Bedroom.Minesweeper
 
         public static void Load()
         {
-            ApplicationFolder = Assembly.GetEntryAssembly().Location;
+            ApplicationFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             DataFolder = Path.Combine(Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).FullName, "LocalLow", APPDATA_FOLDER);
             if (!Directory.Exists(DataFolder))
                 Directory.CreateDirectory(DataFolder);

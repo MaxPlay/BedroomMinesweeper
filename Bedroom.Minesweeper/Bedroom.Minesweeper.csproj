@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +29,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <OutputPath>..\bin\Release\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -52,6 +52,9 @@
     <Compile Include="ECS\IUpdatableComponent.cs" />
     <Compile Include="Exceptions\AssetLoadException.cs" />
     <Compile Include="Assets\AssetManager.cs" />
+    <Compile Include="Exceptions\GameLoadConfigException.cs" />
+    <Compile Include="Exceptions\GameLoadException.cs" />
+    <Compile Include="Exceptions\GameMainLoadException.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
     <Compile Include="CommandLineArguments.cs" />
     <Compile Include="Core.cs" />
@@ -62,6 +65,10 @@
     <Compile Include="Levels\LevelManager.cs" />
     <Compile Include="Exceptions\LevelNotFoundException.cs" />
     <Compile Include="Exceptions\LevelRegisterException.cs" />
+    <Compile Include="Loading\GameLibrary.cs" />
+    <Compile Include="Loading\GameLoading.cs" />
+    <Compile Include="Loading\IGameMain.cs" />
+    <Compile Include="Loading\LoadingPreferences.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

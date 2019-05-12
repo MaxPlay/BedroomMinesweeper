@@ -1,0 +1,3 @@
+Library=Game.dll
+RootNamespace=Bedroom.Minesweeper.Game
+RootType=Main
