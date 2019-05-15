@@ -1,4 +1,6 @@
-﻿using Bedroom.Minesweeper.Loading;
+﻿using Bedroom.Minesweeper.Game.Levels;
+using Bedroom.Minesweeper.Levels;
+using Bedroom.Minesweeper.Loading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,9 @@ namespace Bedroom.Minesweeper.Game
     {
         public void Load()
         {
-
+            Core.Instance.IsMouseVisible = true;
+            new TestLevel("test");
+            LevelManager.Instance.Load("test");
         }
 
         public void Unload()

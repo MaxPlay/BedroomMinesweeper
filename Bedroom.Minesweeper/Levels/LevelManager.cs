@@ -141,7 +141,7 @@ namespace Bedroom.Minesweeper.Levels
                     id = idGenerator++;
                     if (idGenerator == originalId)
                         throw new IndexOutOfRangeException("The maximum amount of levels is reached.");
-                } while (!levels.ContainsKey(id));
+                } while (levels.ContainsKey(id));
             }
 
             return id;

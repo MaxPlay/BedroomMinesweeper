@@ -19,6 +19,7 @@ namespace Bedroom.Minesweeper.Assets
         {
             if (Instance != null)
                 throw new SingletonException<AssetManager>();
+            Instance = this;
             this.contentManager = contentManager;
             Textures = new AssetContainer<Texture2D>(contentManager);
             SoundEffects = new AssetContainer<SoundEffect>(contentManager);

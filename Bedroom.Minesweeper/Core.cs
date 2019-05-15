@@ -17,6 +17,7 @@ namespace Bedroom.Minesweeper
 
         public Core()
         {
+            Instance = this;
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             new GameLoading();
@@ -29,8 +30,8 @@ namespace Bedroom.Minesweeper
         #region Public Properties
 
         public static GraphicsDeviceManager Graphics { get; private set; }
-
         public static SpriteBatch SpriteBatch { get; private set; }
+        public static Core Instance { get; private set; }
 
         #endregion Public Properties
 

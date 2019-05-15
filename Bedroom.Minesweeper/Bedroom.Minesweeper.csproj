@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Assets\AssetContainer.cs" />
     <Compile Include="Assets\IAssetImporter.cs" />
+    <Compile Include="Assets\Importer\PngImporter.cs" />
     <Compile Include="ECS\Components\Component.cs" />
     <Compile Include="ECS\Entity.cs" />
     <Compile Include="ECS\IDrawableComponent.cs" />
@@ -60,6 +61,9 @@
     <Compile Include="Core.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="AppData.cs" />
+    <Compile Include="Hex\Hexagon.cs" />
+    <Compile Include="Hex\HexagonGrid.cs" />
+    <Compile Include="Hex\RelativeHex.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Levels\Level.cs" />
     <Compile Include="Levels\LevelManager.cs" />
@@ -87,7 +91,6 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Math\" />
     <Folder Include="Rendering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -6,6 +6,12 @@ namespace Bedroom.Minesweeper.Levels
 {
     public abstract class Level
     {
+        #region Private Fields
+
+        private List<Entity> entities;
+
+        #endregion Private Fields
+
         #region Public Constructors
 
         // A man needs a name.
@@ -25,12 +31,6 @@ namespace Bedroom.Minesweeper.Levels
 
         #endregion Public Properties
 
-        #region Protected Properties
-
-        List<Entity> entities;
-
-        #endregion Protected Properties
-
         #region Public Methods
 
         public abstract void DeInit();
@@ -38,6 +38,7 @@ namespace Bedroom.Minesweeper.Levels
         public void DoDraw(GameTime gameTime)
         {
             entities.ForEach(c => c.Draw(gameTime));
+            Draw(gameTime);
         }
 
         public void DoUpdate(GameTime gameTime)
@@ -48,7 +49,9 @@ namespace Bedroom.Minesweeper.Levels
                 Initialized = true;
             }
 
+            Update(gameTime);
             entities.ForEach(c => c.Update(gameTime));
+            LateUpdate(gameTime);
         }
 
         public abstract void Init();
@@ -58,6 +61,10 @@ namespace Bedroom.Minesweeper.Levels
         #region Protected Methods
 
         protected abstract void Draw(GameTime deltaTime);
+
+        protected virtual void LateUpdate(GameTime gameTime)
+        {
+        }
 
         protected abstract void Update(GameTime deltaTime);
 
